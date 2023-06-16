@@ -45,6 +45,16 @@ app.get("/barang", (req, res)=> {
     })
 })
 
+app.get("/barang/:id", (req, res) => {
+    const id = req.params.id
+
+    const sqlQuery = `SELECT * FROM barang WHERE id_barang = ${id}`;
+
+    con.query(sqlQuery, (err, rows) => {
+        res.json(rows[0])
+    });
+});
+
 app.post("/barang", (req,res)=>{
     const nama_barang = req.body.nama_barang;
     const deksripsi = req.body.deksripsi;
@@ -57,6 +67,15 @@ app.post("/barang", (req,res)=>{
 
     const sqlQuery = `INSERT INTO barang (nama_barang, deksripsi, jenis, ukuran, warna, harga) VALUES ('${nama_barang}', '${deksripsi}', '${jenis}', '${ukuran}', '${warna}', '${harga}')`
 
+    con.query(sqlQuery, (err, rows) => {
+        res.json(rows)
+    });
+});
+
+app.delete("/barang/:id", (req,res) => {
+    const id = req.params.id
+
+    const sqlQuery = `DELETE FROM barang WHERE id_barang = ${id}`
     con.query(sqlQuery, (err, rows) => {
         res.json(rows)
     })
